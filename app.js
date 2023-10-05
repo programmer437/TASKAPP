@@ -17,9 +17,9 @@ app.use('/api/v1/users',user);
 app.use('/api/v1/tasks',authenticateUser,tasks);
 
 app.use(express.static(path.join(__dirname, 'public/my-react-app/build')));
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public/my-react-app/build', 'index.html'));
-//   });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/my-react-app/build'));
+  });
 
 const port=3000;
 
