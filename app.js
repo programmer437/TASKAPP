@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const authenticateUser=require("./middlewares/authMiddleware");
 const tasks=require("./routes/tasks")
+const cors = require('cors');
 
 
 
@@ -12,14 +13,11 @@ require('dotenv').config();
 const app=express();
 app.use(express.json());
 app.use(cookieParser()); 
+app.use(cors());
 
 app.use('/api/v1/users',user);
 app.use('/api/v1/tasks',authenticateUser,tasks);
 
-app.use(express.static(path.join(__dirname, 'public/my-react-app/build')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/my-react-app/build'));
-  });
 
 const port=3000;
 
