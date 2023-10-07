@@ -11,9 +11,14 @@ const cors = require('cors');
 
 require('dotenv').config();
 const app=express();
+const corsOptions = {
+    origin: 'http://localhost:3001', // Replace with your frontend's URL
+    credentials: true,
+     // This allows cookies to be sent in cross-origin requests
+  };
 app.use(express.json());
 app.use(cookieParser()); 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api/v1/users',user);
 app.use('/api/v1/tasks',authenticateUser,tasks);

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import "../css/Login.css"
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Login() {
@@ -20,10 +20,10 @@ export default function Login() {
     const handleLogin=(async (e)=>{
         e.preventDefault();
         try {
-            const response=await axios.post("http://localhost:3000/api/v1/users/login");
+            const response=await axios.post("http://localhost:3000/api/v1/users/login",formData,{withCredentials:true});
             if(response.status===201)
             {
-                history('/dashboard');
+                history('/tasks');
             }
             
         } catch (error) {

@@ -1,0 +1,79 @@
+body {
+    background-color: white;
+  }
+  
+  .taskContainer .taskItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: black;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    width: 80%;
+
+    
+  }
+  .taskContainer{
+    overflow-y:scroll;
+    width: 60%;
+  }
+
+  .taskItem .icons{
+    display: flex;
+    justify-content:space-between;
+    gap: 10px;
+    align-items: center;
+
+
+
+  }
+  .icons *{
+    width: 25px;
+    height: 25px;
+
+  }
+  .taskContainer .taskItem .icons *:hover {
+    /* Change the color to your desired color */
+    color: red; /* Change 'red' to the desired color */
+  }
+
+  .taskItem p{
+    margin: 0;
+  }
+
+  
+  
+  .createTask {
+    height: 20%;
+    margin-top: 60px;
+    padding: 50px 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 7px 2px #0F000A;
+    box-shadow: 0px 0px 7px 2px #0F000A;
+  }
+  
+  .createTask .btn {
+   
+    font-size: 1vw;
+    height: 42px;
+    margin-left: 0px;
+    width: 25%;
+    min-width: 60px;
+  }
+  
+  .createTask input{
+    width: 60%;
+    height: 41px;
+    border: 2px solid black;
+
+  }
+  .row > h2{
+    text-align: center;
+    margin: 0;
+    color: rgb(247, 0, 230);
+  }
+  
+
+  
