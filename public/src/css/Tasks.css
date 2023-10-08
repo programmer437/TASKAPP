@@ -7,8 +7,12 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 7px 2px #0F000A;
+    box-shadow: 0px 0px 7px 2px #e7e0e4;
     color: black;
-    border: 2px solid black;
+    
     margin-bottom: 5px;
     width: 80%;
 
@@ -41,39 +45,55 @@ body {
   .taskItem p{
     margin: 0;
   }
+  section{
+    background-color:rgb(244,245,248) ;
+  }
 
   
   
   .createTask {
-    height: 20%;
+    height: 30%;
     margin-top: 60px;
     padding: 50px 30px;
     background-color: rgb(255, 255, 255);
     border-radius: 3px;
     -webkit-box-shadow: 0px 0px 7px 2px #0F000A;
-    box-shadow: 0px 0px 7px 2px #0F000A;
+    box-shadow: 0px 0px 7px 2px #e7e0e4;
+  }
+
+  .inputField{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 30px;
   }
   
-  .createTask .btn {
-   
-    font-size: 1vw;
-    height: 42px;
+  .inputField .btn {
+    color: white;
+    font-size: 1.2vw;
+    height: 40px;
     margin-left: 0px;
     width: 25%;
     min-width: 60px;
+    background-color: rgb(92, 32, 236);
   }
   
-  .createTask input{
+  .inputField input{
     width: 60%;
     height: 41px;
-    border: 2px solid black;
+    border: 2px solid rgb(244, 245, 248);
+    background-color: rgb(244, 245, 248);
 
   }
-  .row > h2{
-    text-align: center;
-    margin: 0;
-    color: rgb(247, 0, 230);
+  .taskTitle{
+    font-size: 38px;
+    
   }
-  
+  .row{
+    background-color: rgb(244,245,248) !important;
+  }
 
-  
+  .createdAlert{
+    color: rgb(255, 55, 0);
+  }
