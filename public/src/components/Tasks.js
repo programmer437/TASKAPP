@@ -7,6 +7,8 @@ import '../css/Tasks.css';
 export default function Dashboard() {
   const history = useNavigate();
   const [taskCreated, setTaskCreated] = useState(false);
+  const [taskDelete, setTaskDelete] = useState(false);
+
   const [input, setInput] = useState('');
   const [data, setData] = useState(null);
 
@@ -25,12 +27,33 @@ export default function Dashboard() {
       }
     }
     fetchData();
-  }, [taskCreated]);
+  }, [taskCreated,taskDelete]);
 
   if (!data) return null;
 
   function editTaskHandle(id) {
     history(`/tasks/${id}`);
+  }
+
+  async function deleteTaskHandle(id,e){
+    e.preventDefault();
+
+    try {
+      
+      const response = await axios.delete(`http://localhost:3000/api/v1/tasks/${id}`,{
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setTaskDelete(true);
+        setTimeout(() => {
+          setTaskDelete(false);
+
+        }, 1000); // Change to 10000 milliseconds (10 seconds)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   async function handleCreateTask(e) {
@@ -51,7 +74,7 @@ export default function Dashboard() {
         setTimeout(() => {
           setTaskCreated(false);
 
-        }, 3000); // Change to 10000 milliseconds (10 seconds)
+        }, 1000); // Change to 10000 milliseconds (10 seconds)
       }
     } catch (error) {
       console.log(error);
@@ -68,7 +91,7 @@ export default function Dashboard() {
         <p>{task.name}</p>
         <div className="icons">
           <AiTwotoneEdit onClick={() => editTaskHandle(task._id)} />
-          <AiFillDelete />
+          <AiFillDelete onClick={(e)=> deleteTaskHandle(task._id,e)}/>
         </div>
       </div>
     );
@@ -79,7 +102,7 @@ export default function Dashboard() {
   return (
     <section className='vh-100'>
       <div className='container h-100'>
-        <div className='row d-flex align-items-center justify-content-center h-100'>
+        <div className='createTaskContainer row d-flex align-items-center justify-content-center h-100'>
           <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
             <p className='taskTitle'>Task Manager</p>
             <div className='inputField'>
@@ -93,6 +116,8 @@ export default function Dashboard() {
               <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
             </div>
             {taskCreated && <p className='createdAlert'>Task Created!</p>}
+            {taskDelete && <p className='createdAlert'>Task Deleted!</p>}
+
           </div>
 
           <div className='taskContainer h-50 d-flex flex-column align-items-center '>

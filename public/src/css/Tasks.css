@@ -1,7 +1,4 @@
-body {
-    background-color: white;
-  }
-  
+
   .taskContainer .taskItem{
     display: flex;
     justify-content: space-between;
@@ -90,7 +87,7 @@ body {
     font-size: 38px;
     
   }
-  .row{
+  .createTaskContainer{
     background-color: rgb(244,245,248) !important;
   }
 
