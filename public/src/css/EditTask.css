@@ -86,7 +86,7 @@
 }
 
 
-.homeButton{
+.editTaskSection a button{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,6 +96,15 @@
     color: rgb(229, 223, 223);
     height: 50px;
     margin-bottom: 150px;
+    border-radius: 7px;
     
     font-size: 2vw;
+}
+.editTaskSection a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
 }

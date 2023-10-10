@@ -2,6 +2,8 @@
 import { useParams} from 'react-router-dom';
 import '../css/EditTask.css';
 import React, { useEffect, useState } from 'react';
+import { Link} from 'react-router-dom';
+
 import axios from 'axios';
 
 
@@ -11,7 +13,7 @@ export default function EditTask() {
   const {id}=useParams();
   const [data,setData]=useState({
     name:'',
-    done:false
+    completed:false
   });
 
   useEffect(()=>{
@@ -20,12 +22,11 @@ export default function EditTask() {
         const response = await axios.get(`http://localhost:3000/api/v1/tasks/${id}`,{
         withCredentials: true,
       }); 
-      const {name :taskName,completed}=response.data;
-  
-      setData({
-        name:taskName,
-        done:completed
-      })
+      
+     
+      const { name, completed } = response.data;
+
+      setData({ name, completed });
       } catch (error) {
         console.log(error);
         
@@ -41,7 +42,25 @@ export default function EditTask() {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
     }));
+    
   };
+  const editTaskHandle= async (e)=>{
+    e.preventDefault();
+    try {
+      const response = await axios.patch(`http://localhost:3000/api/v1/tasks/${id}`,data,{
+      withCredentials: true,
+    }); 
+    if(response.status===200){
+      
+    }
+
+
+    } catch (error) {
+      console.log(error);
+      
+    }
+  
+  }
   
 
   return (
@@ -57,16 +76,26 @@ export default function EditTask() {
           </div>
           <div className='right'>
           <p>{id}</p>
-          <input className="text" name="name" type="text"  value={data.name} onChange={handleChange}/>
-          <input className="input" checked={data.done} type="checkbox" name="done" onChange={handleChange}/>
+          <input 
+            className="text" 
+            name="name" 
+            type="text"  
+            value={data.name} 
+            onChange={handleChange}/>
+          <input 
+            className="input" 
+            checked={data.completed} 
+            type="checkbox" 
+            name="completed" 
+            onChange={handleChange}/>
           </div>
         </div>
-        <button className='editButton'>Edit</button>
+        <button onClick={editTaskHandle} className='editButton'>Edit</button>
         <div></div>
         
       </div>
        
-      <button className='homeButton col-2'>Back to task</button>
+      <Link to="/tasks" className='col-12'><button className='homeButton col-2'>Back to task</button></Link>
       
    
 

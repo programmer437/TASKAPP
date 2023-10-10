@@ -42,6 +42,9 @@
   .taskItem p{
     margin: 0;
   }
+  .strike{
+    text-decoration: line-through;
+  }
   section{
     background-color:rgb(244,245,248) ;
   }
