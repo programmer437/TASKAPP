@@ -34,18 +34,15 @@ export default function EditTask() {
     fetchData()
   },[id]);      
 
-  const handleNameChange = (e) => {
-    setData({
-      ...data,
-      name: e.target.value,
-    });
+  const handleChange = (e) => {
+    const { name, value, checked, type } = e.target;
+
+    setData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
-  const handleCheckboxChange = (e) => {
-    setData({
-      ...data,
-      done: e.target.checked, // Update done based on checkbox state
-    });
-  };
+  
 
   return (
     <section className='editTaskSection' >
@@ -60,9 +57,8 @@ export default function EditTask() {
           </div>
           <div className='right'>
           <p>{id}</p>
-          <input className="text" type="text"  value={data.name} onChange={handleNameChange}/>
-          <input className="input" checked={data.done} type="checkbox" name="myCheckbox" onChange={handleCheckboxChange}
-/>
+          <input className="text" name="name" type="text"  value={data.name} onChange={handleChange}/>
+          <input className="input" checked={data.done} type="checkbox" name="done" onChange={handleChange}/>
           </div>
         </div>
         <button className='editButton'>Edit</button>
