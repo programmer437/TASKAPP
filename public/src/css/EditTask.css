@@ -1,0 +1,101 @@
+.editTaskSection{
+    background-color:rgb(242, 239, 239);
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    height: 100vh;
+    align-items: center;
+
+}
+.editTaskContainer{
+    
+    height: 300px;
+    padding-bottom: 350px;
+    background-color: white;
+    border: 2px solid rgb(255, 255, 255);
+    margin: 0;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+
+.editTaskHeading{
+    margin-top: 25px;
+    font-size: 35px;
+    font-weight: bold;
+
+}
+.middle{
+    display: flex;
+    align-self: stretch;
+    height: 60%;
+    font-size: 20px;
+    
+
+}
+.left{
+    gap: 10px;
+    margin-right: auto;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 25%;
+   
+
+}
+.left p:nth-of-type(3){
+    margin-top: 5px;
+    margin-left: 0;
+}
+.right{
+    margin-right: 150px;
+    margin-left: auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+
+}
+.right .input{
+    margin-right: auto; 
+    margin-left: 0;
+    margin-top: 37px;
+    width: 20px;
+    height: 250px;
+    
+
+}
+.right .text{
+    margin-top: 10px;
+}
+.editButton{
+    margin: 0;
+    margin-top: 180px;
+    width: 80%;
+    border-radius: 5px;
+    color: rgb(211, 197, 197);
+    background-color: rgb(91,62,235);
+    font-size: 2vw;
+    padding: 0;
+
+}
+
+
+.homeButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 12px;
+    background-color: black;
+    color: rgb(229, 223, 223);
+    height: 50px;
+    margin-bottom: 150px;
+    
+    font-size: 2vw;
+}

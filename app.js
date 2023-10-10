@@ -9,8 +9,11 @@ const cors = require('cors');
 
 
 
+
+
 require('dotenv').config();
 const app=express();
+//app.use(express.static('public/build'));
 const corsOptions = {
     origin: 'http://localhost:3001', // Replace with your frontend's URL
     credentials: true,

@@ -8,7 +8,7 @@ const { login, signup, deleteUser,logout } = require('../controllers/user');
 router.route('/login').post(login);
 router.route('/signup').post(signup);
 router.route('/delete').post(deleteUser);
-router.route('/logout').post(authMiddleware,logout)
+router.route('/logout').get(logout)
 
 
 module.exports = router;

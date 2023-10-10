@@ -69,7 +69,7 @@ const deleteUser=async (req,res)=>{
 const logout= (req,res)=>{
     try {
         // Clear the token cookie by setting it to an empty string and expiring it immediately
-        res.cookie('token', '', { maxAge: 0, httpOnly: true });
+        res.cookie('token', '');
         res.status(200).json({ msg: 'Logged out successfully' });
       } catch (error) {
         // Handle any potential errors that might occur during the logout process

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
 
 export default function Dashboard() {
+  
   const history = useNavigate();
   const [taskCreated, setTaskCreated] = useState(false);
   const [taskDelete, setTaskDelete] = useState(false);
@@ -50,6 +51,25 @@ export default function Dashboard() {
 
         }, 1000); // Change to 10000 milliseconds (10 seconds)
       }
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  async function logOutHandle(e){
+    e.preventDefault();
+
+    try {
+      
+      
+      const response = await axios.get("http://localhost:3000/api/v1/users/logout",{withCredentials: true});
+      console.log("Logout response:", response);
+      if(response.status===200)
+      {
+        history('/')
+      }
+      
     } catch (error) {
       console.log(error);
     }
@@ -103,23 +123,27 @@ export default function Dashboard() {
     <section className='vh-100'>
       <div className='container h-100'>
         <div className='createTaskContainer row d-flex align-items-center justify-content-center h-100'>
-          <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
-            <p className='taskTitle'>Task Manager</p>
-            <div className='inputField'>
-              <input
-                type='text'
-                name=""
-                value={input}
-                onChange={handleChange}
-                placeholder='e.g. wash dishes'
-              />
-              <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
+            <div className='logout'>
+              <button onClick={logOutHandle} className='btn btn-primary'>Logout</button>
+              
             </div>
-            {taskCreated && <p className='createdAlert'>Task Created!</p>}
-            {taskDelete && <p className='createdAlert'>Task Deleted!</p>}
+            <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
+              <p className='taskTitle'>Task Manager</p>
+              <div className='inputField'>
+                <input
+                  type='text'
+                  name=""
+                  value={input}
+                  onChange={handleChange}
+                  placeholder='e.g. wash dishes'
+                />
+                <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
+              </div>
+              {taskCreated && <p className='createdAlert'>Task Created!</p>}
+              {taskDelete && <p className='createdAlert'>Task Deleted!</p>}
 
-          </div>
-
+            </div>
+          
           <div className='taskContainer h-50 d-flex flex-column align-items-center '>
             {taskItems}
           </div>
