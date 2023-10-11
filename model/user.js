@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 
-const userShema= new mongoose.Schema({
+const userSchema= new mongoose.Schema({
     email:{
         type:String,
         required:true,
@@ -11,6 +11,12 @@ const userShema= new mongoose.Schema({
         type:String,
         required:true
     }
-})
+});
 
-module.exports=mongoose.model('user',userShema);
+userSchema.pre("remove", async function (next) {
+    await Task.deleteMany({ user: this._id });
+    next();
+  });
+
+
+module.exports=mongoose.model('user',userSchema);

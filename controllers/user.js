@@ -1,9 +1,13 @@
 const User=require("../model/user");
 const jwt = require('jsonwebtoken');
+const Tasks=require('../model/tasks')
+const {hash,verify:verifyHash}=require('../middlewares/passwordHash')
 
 const signup= async (req,res)=>{
     try {
-        const user= await User.create(req.body);
+        const data=req.body;
+        data.password= await hash(req.body.password);
+        const user= await User.create(data);
         res.status(201).json(user);
         
     } catch (error) {
@@ -23,8 +27,9 @@ const login= async (req,res)=>{
         if(!user){
             return res.status(404).json({error: "Account not dound"});
         }
-        if(user.email == email && user.password==password)
+        if(user.email == email && verifyHash(user.password,password))
         {
+            console.log(user.password);
             const payload = {
                 user: user.id // Assuming user.id is the MongoDB ObjectId
               };
@@ -54,7 +59,9 @@ const deleteUser=async (req,res)=>{
         }
         if(user.email == email && user.password==password)
         {
-        const user= await User.findOneAndDelete({email});
+        await Tasks.deleteMany({user: user._id});
+        await User.findOneAndDelete({email});
+        res.cookie('token', '');
         res.status(201).json({msg: "user deleted succesfully"});
         }else{
         res.status(401).json({error:"Check your password or email"});
