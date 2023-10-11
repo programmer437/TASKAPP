@@ -40,10 +40,13 @@
   }
 
   .taskItem p{
+    font-size: 25px;
+    font-weight: bolder;
     margin: 0;
   }
   .strike{
     text-decoration: line-through;
+    color: #8b8a8a;
   }
   section{
     background-color:rgb(244,245,248) ;
@@ -78,7 +81,10 @@
     min-width: 60px;
     background-color: rgb(92, 32, 236);
   }
+  .inputField .btn:hover{
+    background-color: rgb(130, 85, 236);
   
+  }
   .inputField input{
     width: 60%;
     height: 41px;

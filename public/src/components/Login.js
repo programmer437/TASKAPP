@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import "../css/Login.css"
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Link} from 'react-router-dom';
+
 
 export default function Login() {
     const history=useNavigate();
@@ -76,7 +78,7 @@ export default function Login() {
                                     </form>
                                 </div>
                                 <div>
-                                    <p className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
+                                    <p className="mb-0">Don't have an account? <Link to="/signup" className="text-white-50 fw-bold">Sign Up</Link></p>
                                 </div>
                             </div>
                         </div>

@@ -105,18 +105,18 @@ export default function Dashboard() {
     setInput(e.target.value);
   })
 
-  const taskItems = data.tasks.map((task) => {
-    return (
-      <div className="taskItem" key={task._id}>
-        <p className={task.completed ? "strike" : ""}>{task.name}</p>
-        <div className="icons">
-          <AiTwotoneEdit onClick={() => editTaskHandle(task._id)} />
-          <AiFillDelete onClick={(e)=> deleteTaskHandle(task._id,e)}/>
+    const taskItems = data.tasks.map((task) => {
+      return (
+        <div className="taskItem" key={task._id}>
+          <p className={task.completed ? "strike" : ""}>{task.name}</p>
+          <div className="icons">
+            <AiTwotoneEdit onClick={() => editTaskHandle(task._id)} />
+            <AiFillDelete onClick={(e)=> deleteTaskHandle(task._id,e)}/>
+          </div>
+          {console.log(task)}
         </div>
-        {console.log(task)}
-      </div>
-    );
-  })
+      );
+    })
   console.log(taskCreated);
 
 

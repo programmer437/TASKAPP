@@ -11,6 +11,8 @@ import axios from 'axios';
 
 export default function EditTask() {
   const {id}=useParams();
+  const [taskEdited, setTaskEdited] = useState(false);
+
   const [data,setData]=useState({
     name:'',
     completed:false
@@ -22,11 +24,15 @@ export default function EditTask() {
         const response = await axios.get(`http://localhost:3000/api/v1/tasks/${id}`,{
         withCredentials: true,
       }); 
-      
-     
-      const { name, completed } = response.data;
+      if(response.status===200){
+        const { name, completed } = response.data;
 
       setData({ name, completed });
+      
+      }
+      
+     
+      
       } catch (error) {
         console.log(error);
         
@@ -51,6 +57,12 @@ export default function EditTask() {
       withCredentials: true,
     }); 
     if(response.status===200){
+      setTaskEdited(true);
+      setTimeout(() => {
+        setTaskEdited(false);
+        
+      }, 1000);
+
       
     }
 
@@ -91,7 +103,9 @@ export default function EditTask() {
           </div>
         </div>
         <button onClick={editTaskHandle} className='editButton'>Edit</button>
-        <div></div>
+        <div>
+          {taskEdited && <p className='createdAlert'>Task Edited</p>}
+        </div>
         
       </div>
        
