@@ -57,9 +57,7 @@ export default function Signup() {
         }, 3000); 
         }
       } catch (error) {
-        console.log("erroris this",error);
         if(error.response.status===400){
-          console.log("User exists")
           setAlerts({...alerts,userExist:true});
           setTimeout(() => {
             setAlerts({...alerts,userExist:false});

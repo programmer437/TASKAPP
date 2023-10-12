@@ -64,7 +64,6 @@ export default function Dashboard() {
       
       
       const response = await axios.get("http://localhost:3000/api/v1/users/logout",{withCredentials: true});
-      console.log("Logout response:", response);
       if(response.status===200)
       {
         history('/')
@@ -113,11 +112,10 @@ export default function Dashboard() {
             <AiTwotoneEdit onClick={() => editTaskHandle(task._id)} />
             <AiFillDelete onClick={(e)=> deleteTaskHandle(task._id,e)}/>
           </div>
-          {console.log(task)}
+          
         </div>
       );
     })
-  console.log(taskCreated);
 
 
   return (
