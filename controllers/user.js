@@ -29,7 +29,6 @@ const login= async (req,res)=>{
         }
         if(user.email == email && verifyHash(user.password,password))
         {
-            console.log(user.password);
             const payload = {
                 user: user.id // Assuming user.id is the MongoDB ObjectId
               };

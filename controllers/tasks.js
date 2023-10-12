@@ -14,7 +14,6 @@ const getAllTasks= async (req,res)=>{
 }
 const createTask= async (req,res)=>{
     try {
-        console.log(req.user)
         const task= await Task.create({ ...req.body, user: req.user  });
         res.status(201).json(task);
     } catch (error) {
@@ -52,7 +51,6 @@ const updateTask= async (req,res)=>{
         }
 
         res.status(200).json({ task })
-        console.log({task})
         
     } catch (error) {
         res.status(500).json({msg:error});
