@@ -3,9 +3,13 @@ import "../css/Login.css"
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../app/authSlice';
 
 
 export default function Login() {
+    const dispatch=useDispatch();
     const history = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -24,6 +28,7 @@ export default function Login() {
         try {
             const response = await axios.post("http://localhost:3000/api/v1/users/login", formData, { withCredentials: true });
             if (response.status === 201) {
+                dispatch(login());
                 history('/tasks');
             }
 

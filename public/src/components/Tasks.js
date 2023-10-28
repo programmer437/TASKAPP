@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
+import { logout } from '../app/authSlice';
+
 
 export default function Dashboard() {
+  const dispatch= useDispatch();
   
   const history = useNavigate();
   const [taskCreated, setTaskCreated] = useState(false);
@@ -67,6 +71,7 @@ export default function Dashboard() {
       if(response.status===200)
       {
         history('/')
+        dispatch(logout());
       }
       
     } catch (error) {
