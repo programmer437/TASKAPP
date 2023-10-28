@@ -1,5 +1,5 @@
 import axios from "axios";
-export async function deleteTaskHandle(id,e){
+export default  async function DeleteTaskHandle({id,e,handleTaskDelete}){
     e.preventDefault();
 
     try {
@@ -8,9 +8,9 @@ export async function deleteTaskHandle(id,e){
         withCredentials: true,
       });
       if (response.status === 200) {
-        setTaskDelete(true);
+        handleTaskDelete(true);
         setTimeout(() => {
-          setTaskDelete(false);
+          handleTaskDelete(false);
 
         }, 1000); // Change to 10000 milliseconds (10 seconds)
       }

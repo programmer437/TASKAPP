@@ -5,6 +5,9 @@ import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
 import { logout } from '../app/authSlice';
+import  EditTaskHandle from '../components/refactoring/editTaskHandle';
+import  DeleteTaskHandle from '../components/refactoring/deleteTaskHandle';
+
 
 
 export default function Dashboard() {
@@ -36,30 +39,9 @@ export default function Dashboard() {
 
   if (!data) return null;
 
-  function editTaskHandle(id) {
-    history(`/tasks/${id}`);
-  }
 
-  async function deleteTaskHandle(id,e){
-    e.preventDefault();
 
-    try {
-      
-      const response = await axios.delete(`http://localhost:3000/api/v1/tasks/${id}`,{
-        withCredentials: true,
-      });
-      if (response.status === 200) {
-        setTaskDelete(true);
-        setTimeout(() => {
-          setTaskDelete(false);
-
-        }, 1000); // Change to 10000 milliseconds (10 seconds)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+  
 
   async function logOutHandle(e){
     e.preventDefault();
@@ -114,13 +96,16 @@ export default function Dashboard() {
         <div className="taskItem" key={task._id}>
           <p className={task.completed ? "strike" : ""}>{task.name}</p>
           <div className="icons">
-            <AiTwotoneEdit onClick={() => editTaskHandle(task._id)} />
-            <AiFillDelete onClick={(e)=> deleteTaskHandle(task._id,e)}/>
+            <AiTwotoneEdit onClick={() => EditTaskHandle({ id: task._id,history })} />
+            <AiFillDelete onClick={(e) => DeleteTaskHandle({ id: task._id, e, handleTaskDelete })} />
           </div>
           
         </div>
       );
     })
+    const handleTaskDelete = (value) => {
+      setTaskDelete(value);
+    };
 
 
   return (
