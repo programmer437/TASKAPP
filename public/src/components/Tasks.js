@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai';
+
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
-import { logout } from '../app/authSlice';
-import  EditTaskHandle from '../components/refactoring/editTaskHandle';
-import  DeleteTaskHandle from '../components/refactoring/deleteTaskHandle';
+import TaskList from '../components/TaksList/TaskList'
+import Logout from './authHandlers/logOutHandle';
+import { useDispatch } from 'react-redux';
+
+
 
 
 
 export default function Dashboard() {
   const dispatch= useDispatch();
+
   
   const history = useNavigate();
   const [taskCreated, setTaskCreated] = useState(false);
@@ -43,24 +45,7 @@ export default function Dashboard() {
 
   
 
-  async function logOutHandle(e){
-    e.preventDefault();
-
-    try {
-      
-      
-      const response = await axios.get("http://localhost:3000/api/v1/users/logout",{withCredentials: true});
-      if(response.status===200)
-      {
-        history('/')
-        dispatch(logout());
-      }
-      
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+  
 
   async function handleCreateTask(e) {
     const formData = {
@@ -91,18 +76,6 @@ export default function Dashboard() {
     setInput(e.target.value);
   })
 
-    const taskItems = data.tasks.map((task) => {
-      return (
-        <div className="taskItem" key={task._id}>
-          <p className={task.completed ? "strike" : ""}>{task.name}</p>
-          <div className="icons">
-            <AiTwotoneEdit onClick={() => EditTaskHandle({ id: task._id,history })} />
-            <AiFillDelete onClick={(e) => DeleteTaskHandle({ id: task._id, e, handleTaskDelete })} />
-          </div>
-          
-        </div>
-      );
-    })
     const handleTaskDelete = (value) => {
       setTaskDelete(value);
     };
@@ -113,7 +86,7 @@ export default function Dashboard() {
       <div className='container h-100'>
         <div className='createTaskContainer row d-flex align-items-center justify-content-center h-100'>
             <div className='logout'>
-              <button onClick={logOutHandle} className='btn btn-primary'>Logout</button>
+              <Logout history={history} dispatch={dispatch}/>
               
             </div>
             <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
@@ -134,7 +107,11 @@ export default function Dashboard() {
             </div>
           
           <div className='taskContainer h-50 d-flex flex-column align-items-center '>
-            {taskItems}
+          <TaskList 
+          tasks={data.tasks}
+          handleTaskDelete={handleTaskDelete}
+          history={history}
+           />
           </div>
         </div>
       </div>

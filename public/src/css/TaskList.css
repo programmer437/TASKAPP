@@ -1,0 +1,33 @@
+.taskItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 7px 2px #0F000A;
+    box-shadow: 0px 0px 7px 2px #e7e0e4;
+    color: black;
+    margin-bottom: 5px;
+    width: 48vw;
+  }
+  .taskItem .icons{
+    display: flex;
+    justify-content:space-between;
+    gap: 10px;
+    align-items: center;
+  }
+  .taskItem .icons *:hover {
+    /* Change the color to your desired color */
+    color: red; /* Change 'red' to the desired color */
+  }
+  .taskItem p{
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0;
+    font-family: var(--heading-font)
+  }
+  .strike{
+    text-decoration: line-through;
+    color: #8b8a8a;
+  }
