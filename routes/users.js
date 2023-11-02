@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const tasks = require('../routes/tasks');
 
 const { login, signup, deleteUser,logout } = require('../controllers/user');
-// User-related routesG
+// User-related routes
 router.route('/login').post(login);
 router.route('/signup').post(signup);
 router.route('/delete').post(deleteUser);

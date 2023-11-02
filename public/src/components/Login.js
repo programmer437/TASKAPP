@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import toast, { Toaster } from 'react-hot-toast';
 import { login } from '../app/authSlice';
 
+    
 
 export default function Login() {
+    const notify = () => toast.success('Login successful');
+    const errors = (msg) => toast.error(msg);
     const dispatch=useDispatch();
     const history = useNavigate();
     const [formData, setFormData] = useState({
@@ -26,14 +29,19 @@ export default function Login() {
     const handleLogin = (async (e) => {
         e.preventDefault();
         try {
+            
             const response = await axios.post("http://localhost:3000/api/v1/users/login", formData, { withCredentials: true });
             if (response.status === 201) {
                 dispatch(login());
-                history('/tasks');
+                notify();
+                setTimeout(() => {
+                    history('/tasks');
+                }, 2000);
             }
 
         } catch (error) {
             console.error(error);
+            errors(error.response.data.msg);
 
         }
 
@@ -72,7 +80,7 @@ export default function Login() {
                                 placeholder='Enter Your Password'
                                 required
                             />
-                            
+                            <Toaster toastOptions={{duration:1700}} />
                     
                         <button className="loginBtn" type="submit">Login</button>
                         <p className=""><a className="" href="#!">Forgot password?</a></p>
@@ -82,7 +90,9 @@ export default function Login() {
                 
             </div>
             
-
+            
         </section>
+        
     )
+
 }

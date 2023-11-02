@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
@@ -12,12 +12,11 @@ import { useDispatch } from 'react-redux';
 
 
 export default function Dashboard() {
+    const notify = (msg) => toast.success(msg);
   const dispatch= useDispatch();
 
   
   const history = useNavigate();
-  const [taskCreated, setTaskCreated] = useState(false);
-  const [taskDelete, setTaskDelete] = useState(false);
 
   const [input, setInput] = useState('');
   const [data, setData] = useState(null);
@@ -37,7 +36,7 @@ export default function Dashboard() {
       }
     }
     fetchData();
-  }, [taskCreated,taskDelete]);
+  });
 
   if (!data) return null;
 
@@ -59,13 +58,8 @@ export default function Dashboard() {
         withCredentials: true,
       });
       if (response.status === 201) {
-        setTaskCreated(true);
+        notify('Task Created Successfully');
 
-        setInput('');
-        setTimeout(() => {
-          setTaskCreated(false);
-
-        }, 1000); // Change to 10000 milliseconds (10 seconds)
       }
     } catch (error) {
       console.log(error);
@@ -77,7 +71,7 @@ export default function Dashboard() {
   })
 
     const handleTaskDelete = (value) => {
-      setTaskDelete(value);
+      notify(value);
     };
 
 
@@ -101,8 +95,7 @@ export default function Dashboard() {
                 />
                 <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
               </div>
-              {taskCreated && <p className='createdAlert'>Task Created!</p>}
-              {taskDelete && <p className='createdAlert'>Task Deleted!</p>}
+              <Toaster />
 
             </div>
           

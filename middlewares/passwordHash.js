@@ -1,27 +1,21 @@
-const crypto = require("crypto")
+const bcrypt = require('bcrypt');
 
-async function hash(password) {
-    return new Promise((resolve, reject) => {
-        const salt = crypto.randomBytes(8).toString("hex")
-
-        crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-            if (err) reject(err);
-            resolve(salt + ":" + derivedKey.toString('hex'))
-        });
-    })
+const hashPassword= async (password)=>{
+    try {
+        const saltRounds=10;
+        const hashedPassword=await bcrypt.hash(password,saltRounds);
+        return hashedPassword;
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
 }
-
-async function verify(password, hash) {
-    return new Promise((resolve, reject) => {
-        const [salt, key] = hash.split(":")
-        crypto.scrypt(password, salt, 64, (err, derivedKey) => {
-            if (err) reject(err);
-            resolve(key == derivedKey.toString('hex'))
-        });
-    })
+const comparePassword= async (password,hashedPassword)=>{
+    return bcrypt.compare(password,hashedPassword);
 }
 
 module.exports={
-    hash,
-    verify
+    hashPassword,
+    comparePassword
 }

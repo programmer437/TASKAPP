@@ -12,7 +12,7 @@ const authenticateUser = (req, res, next) => {
 
   try { 
     // Verify the token (you'll need a secret key for this)
-    const decoded = jwt.verify(token, process.env.SECRATE_KEY);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
     // Attach the user information to the request object for use in subsequent middleware or routes
     req.user = decoded.user;

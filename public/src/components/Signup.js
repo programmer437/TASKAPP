@@ -3,29 +3,28 @@ import "../css/Signup.css"
 import {useState} from 'react';
 import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';
-
-
+import toast, { Toaster } from 'react-hot-toast';
 import { Link} from 'react-router-dom';
-import 'animate.css'
+
 
 
 
 export default function Signup() {
+  const notify = () => toast.success('Account created successfully');
+  const errors = (msg) => toast.error(msg);
+
   const history=useNavigate();
   const [formData,setFormData]=useState({
     email:'',
     password:''
   })
   const [reenterPassword, setReenterPassword] = useState('');
-  const [alerts, setAlerts] = useState({
-    userExist:false,
-    userCreated:false
-  });
 
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const handleChangePassword = (e) => {
     setPasswordsMatch(true);
+
 
     setFormData({
       ...formData,
@@ -48,24 +47,18 @@ export default function Signup() {
       
       try {
         const response=await axios.post("http://localhost:3000/api/v1/users/signup",formData,{withCredentials:true});
-        
         if(response.status===201){
-          setAlerts({...alerts,userCreated:true});
+          
+          notify();
           setTimeout(() => {
-            setAlerts({...alerts,userCreated:false});
-            history('/');
-        }, 3000); 
+            history('/login');
+          }, 2000);
         }
       } catch (error) {
-        if(error.response.status===400){
-          setAlerts({...alerts,userExist:true});
-          setTimeout(() => {
-            setAlerts({...alerts,userExist:false});
-          
+        
+        errors(error.response.data.msg);
 
-        }, 2000); 
 
-        }
         
       }
     }
@@ -95,7 +88,6 @@ export default function Signup() {
               onChange={handleChangePassword}
               value={formData.password}
               minLength="6"  
-              maxLength="12" 
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
               title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" 
               name='password' 
@@ -105,18 +97,16 @@ export default function Signup() {
               onChange={handleChangeVerifyPassword}
               value={reenterPassword}
               minLength="6"  
-              maxLength="12" 
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" 
               title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" 
               name='verifyPassword' 
               id='verifyPassword' 
               placeholder='Reenter Password'/>
               {!passwordsMatch && <p style={{ color: 'red' }}>Passwords do not match</p>}
-              {alerts.userExist && <p style={{ color: 'red' }}>User Already Exist</p>}
-              {alerts.userCreated && <p style={{ color: 'green' }}>User Created! Redirecting to the main page</p>}
+              <Toaster toastOptions={{duration:2000}}/>
 
 
-          <button className='signUpBtn animate__wobble animate__wobble  '>Sign Up</button>
+          <button className='signUpBtn   '>Sign Up</button>
           <p>Already have an account <Link to="/login">Sign in</Link></p>
         </form>
       </div>

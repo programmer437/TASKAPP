@@ -1,23 +1,28 @@
 const User=require("../model/user");
 const jwt = require('jsonwebtoken');
 const Tasks=require('../model/tasks')
-const {hash,verify:verifyHash}=require('../middlewares/passwordHash')
+const {hashPassword,comparePassword}=require('../middlewares/passwordHash')
 
 const signup= async (req,res)=>{
     try {
-        const data=req.body;
-        data.password= await hash(req.body.password);
-        const user= await User.create(data);
-        res.status(201).json(user);
+        const {email,password}=req.body;
+       
+        if(!email || !password){
+            return res.status(400).json({msg:"Please provide email and password"});
+        }
+        const userExist=await User.findOne({email});
+        if(userExist){
+            return res.status(400).json({msg:"User already exists"});
+        }
+        const hashedpassword= await hashPassword(password);
+        await User.create({email,password:hashedpassword});
+        res.status(201).json({
+            msg:"User created succesfully"});
         
     } catch (error) {
-        if (error.code === 11000) {
-            // Handle duplicate key error (e.g., email already exists)
-            res.status(400).json({ error: 'User already exists.' });
-          } else {
+       
             // Handle other errors
             res.status(500).json({ error: 'An error occurred.' });
-          }
     }
 }
 const login= async (req,res)=>{
@@ -25,14 +30,20 @@ const login= async (req,res)=>{
         const {email,password}=req.body;
         const user= await User.findOne({email});
         if(!user){
-            return res.status(404).json({error: "Account not dound"});
+            return res.status(404).json({msg: "User Does not exist"});
         }
-        if(user.email == email && verifyHash(user.password,password))
-        {
+
+        const passwordOk= await comparePassword(password,user.password) ;
+        if(!passwordOk){
+            return res.status(404).json({msg:"Check your password or email"});
+        }
+
+        
+            
             const payload = {
                 user: user.id // Assuming user.id is the MongoDB ObjectId
               };
-            const token = jwt.sign(payload, process.env.SECRATE_KEY, {
+            const token = jwt.sign(payload, process.env.SECRET_KEY, {
                 expiresIn: '1h', // Token expiration time
             });
             res.cookie('token', token, {
@@ -42,11 +53,9 @@ const login= async (req,res)=>{
               
               
             res.status(201).json({ token, msg: 'Log in Successful' });
-        }else{
-        res.status(401).json({error:"Check your password or email"});
-        }
+        
     } catch (error) {
-        res.status(500).json({msg:error});
+        res.status(500).json({msg:"An error occured"});
     }
 }
 const deleteUser=async (req,res)=>{
@@ -56,7 +65,7 @@ const deleteUser=async (req,res)=>{
         if(!user){
             return res.status(404).json({error: "Account not dound"});
         }
-        if(user.email == email && user.password==password)
+        if(comparePassword(user.password,password))
         {
         await Tasks.deleteMany({user: user._id});
         await User.findOneAndDelete({email});

@@ -8,11 +8,7 @@ export default  async function DeleteTaskHandle({id,e,handleTaskDelete}){
         withCredentials: true,
       });
       if (response.status === 200) {
-        handleTaskDelete(true);
-        setTimeout(() => {
-          handleTaskDelete(false);
-
-        }, 1000); // Change to 10000 milliseconds (10 seconds)
+        handleTaskDelete("Task deleted successfully")// Change to 10000 milliseconds (10 seconds)
       }
     } catch (error) {
       console.log(error);
