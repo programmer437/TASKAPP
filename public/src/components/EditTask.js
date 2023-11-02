@@ -1,5 +1,5 @@
-
 import { useParams} from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import '../css/EditTask.css';
 import React, { useEffect, useState } from 'react';
 import { Link} from 'react-router-dom';
@@ -10,8 +10,9 @@ import axios from 'axios';
 
 
 export default function EditTask() {
+  const notify = (msg) => toast.success(msg);
+  const errors = (msg) => toast.error(msg);
   const {id}=useParams();
-  const [taskEdited, setTaskEdited] = useState(false);
 
   const [data,setData]=useState({
     name:'',
@@ -57,11 +58,7 @@ export default function EditTask() {
       withCredentials: true,
     }); 
     if(response.status===200){
-      setTaskEdited(true);
-      setTimeout(() => {
-        setTaskEdited(false);
-        
-      }, 1000);
+      notify("Task Edited Successfully");
 
       
     }
@@ -69,6 +66,7 @@ export default function EditTask() {
 
     } catch (error) {
       console.log(error);
+      errors(error.response.data.msg);
       
     }
   
@@ -103,9 +101,7 @@ export default function EditTask() {
           </div>
         </div>
         <button onClick={editTaskHandle} className='editButton'>Edit</button>
-        <div>
-          {taskEdited && <p className='createdAlert'>Task Edited</p>}
-        </div>
+        <Toaster/>
         
       </div>
        

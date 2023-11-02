@@ -14,7 +14,11 @@ const getAllTasks= async (req,res)=>{
 }
 const createTask= async (req,res)=>{
     try {
+        if(req.body.name.length>20){
+            return res.status(400).json({msg:"Name cannot be more than 20 characters"});
+        }
         const task= await Task.create({ ...req.body, user: req.user  });
+    
         res.status(201).json(task);
     } catch (error) {
         res.status(500).json({msg :error})
@@ -32,7 +36,7 @@ const getTask= async (req,res)=>{
         }
         res.status(200).json(task);
     } catch (error) {
-        res.status(500).json({msg:error});
+        res.status(500).json({msg:"Something went wrong"});
         
     }
 }
@@ -50,7 +54,7 @@ const updateTask= async (req,res)=>{
             return next(createCustomError(`No task with id : ${taskID}`, 404))
         }
 
-        res.status(200).json({ task })
+    res.status(200).json({ task, msg: 'Task updated successfully'  })
         
     } catch (error) {
         res.status(500).json({msg:error});

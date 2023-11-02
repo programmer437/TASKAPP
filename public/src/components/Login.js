@@ -7,9 +7,13 @@ import { useDispatch } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
 import { login } from '../app/authSlice';
 
+
+
+
     
 
 export default function Login() {
+
     const notify = () => toast.success('Login successful');
     const errors = (msg) => toast.error(msg);
     const dispatch=useDispatch();
@@ -51,6 +55,7 @@ export default function Login() {
 
 
     return (
+        
         <section className="loginComponent h-100 w-100">
             <div className="loginContainer"> {/* Added col-xl-5 */}
                 <form className='loginForm col-10 col-sm-6 col-md-5 col-lg-5 col-xl-4' onSubmit={handleLogin}>

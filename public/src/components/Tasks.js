@@ -5,14 +5,20 @@ import axios from 'axios';
 import '../css/Tasks.css';
 import TaskList from '../components/TaksList/TaskList'
 import Logout from './authHandlers/logOutHandle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import IsnotLoggedIn from './IsnotLoggedIn';
+
 
 
 
 
 
 export default function Dashboard() {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
     const notify = (msg) => toast.success(msg);
+    const errors = (msg) => toast.error(msg);
+
   const dispatch= useDispatch();
 
   
@@ -59,10 +65,13 @@ export default function Dashboard() {
       });
       if (response.status === 201) {
         notify('Task Created Successfully');
+        setInput('');
 
       }
     } catch (error) {
       console.log(error);
+      errors(error.response.data.msg);
+
     }
   }
 
@@ -73,41 +82,42 @@ export default function Dashboard() {
     const handleTaskDelete = (value) => {
       notify(value);
     };
-
+console.log(isLoggedIn);
 
   return (
-    <section className='vh-100'>
-      <div className='container h-100'>
-        <div className='createTaskContainer row d-flex align-items-center justify-content-center h-100'>
-            <div className='logout'>
-              <Logout history={history} dispatch={dispatch}/>
-              
-            </div>
-            <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
-              <p className='taskTitle'>Task Manager</p>
-              <div className='inputField'>
-                <input
-                  type='text'
-                  name=""
-                  value={input}
-                  onChange={handleChange}
-                  placeholder='e.g. wash dishes'
-                />
-                <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
-              </div>
-              <Toaster />
-
-            </div>
-          
-          <div className='taskContainer h-50 d-flex flex-column align-items-center '>
-          <TaskList 
-          tasks={data.tasks}
-          handleTaskDelete={handleTaskDelete}
-          history={history}
-           />
+    isLoggedIn ? (<section className='vh-100'>
+    <div className='container h-100'>
+      <div className='createTaskContainer row d-flex align-items-center justify-content-center h-100'>
+          <div className='logout'>
+            <Logout history={history} dispatch={dispatch}/>
+            
           </div>
+          <div className='createTask d-flex flex-column justify-content-center align-items-center col-xl-6 col-md-10 col-sm-11 col-10 '>
+            <p className='taskTitle'>Task Manager</p>
+            <div className='inputField'>
+              <input
+                type='text'
+                name=""
+                value={input}
+                onChange={handleChange}
+                placeholder='e.g. wash dishes'
+              />
+              <button onClick={handleCreateTask} className='btn  text-center rounded-0'>Create Task</button>
+            </div>
+            <Toaster />
+
+          </div>
+        
+        <div className='taskContainer h-50 d-flex flex-column align-items-center '>
+        <TaskList 
+        tasks={data.tasks}
+        handleTaskDelete={handleTaskDelete}
+        history={history}
+         />
         </div>
       </div>
-    </section>
-  )
+    </div>
+  </section>) : <IsnotLoggedIn />
+  
+  );
 }
