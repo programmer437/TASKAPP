@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai';
-import EditTaskHandle from '../TaksList/editTaskHandle';
-import DeleteTaskHandle from '../TaksList/deleteTaskHandle';
+import EditTaskHandle from './editTaskHandle';
+import DeleteTaskHandle from './deleteTaskHandle';
 import '../../css/TaskList.css';
 
 

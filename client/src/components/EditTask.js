@@ -22,7 +22,7 @@ export default function EditTask() {
   useEffect(()=>{
     async function fetchData(){
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/tasks/${id}`,{
+        const response = await axios.get(`http://localhost:3001/api/v1/tasks/${id}`,{
         withCredentials: true,
       }); 
       if(response.status===200){
@@ -54,7 +54,7 @@ export default function EditTask() {
   const editTaskHandle= async (e)=>{
     e.preventDefault();
     try {
-      const response = await axios.patch(`http://localhost:3000/api/v1/tasks/${id}`,data,{
+      const response = await axios.patch(`http://localhost:3001/api/v1/tasks/${id}`,data,{
       withCredentials: true,
     }); 
     if(response.status===200){

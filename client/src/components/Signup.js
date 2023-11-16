@@ -46,7 +46,7 @@ export default function Signup() {
     if (formData.password===reenterPassword) {
       
       try {
-        const response=await axios.post("http://localhost:3000/api/v1/users/signup",formData,{withCredentials:true});
+        const response=await axios.post("http://localhost:3001/api/v1/users/signup",formData,{withCredentials:true});
         if(response.status===201){
           
           notify();

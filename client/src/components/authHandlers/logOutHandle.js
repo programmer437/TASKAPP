@@ -12,7 +12,7 @@ export default function logOutHandle({history,dispatch}) {
         try {
           
           
-          const response = await axios.get("http://localhost:3000/api/v1/users/logout",{withCredentials: true});
+          const response = await axios.get("http://localhost:3001/api/v1/users/logout",{withCredentials: true});
           if(response.status===200)
           {
             dispatch(logout());

@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../css/Tasks.css';
-import TaskList from '../components/TaksList/TaskList'
+import TaskList from './TaksList/TaskList'
 import Logout from './authHandlers/logOutHandle';
 import { useDispatch, useSelector } from 'react-redux';
 import IsnotLoggedIn from './IsnotLoggedIn';
@@ -30,7 +30,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/tasks', {
+        const response = await axios.get('http://localhost:3001/api/v1/tasks', {
           withCredentials: true,
         });
 
@@ -60,7 +60,7 @@ export default function Dashboard() {
 
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/tasks', formData, {
+      const response = await axios.post('http://localhost:3001/api/v1/tasks', formData, {
         withCredentials: true,
       });
       if (response.status === 201) {
@@ -82,7 +82,7 @@ export default function Dashboard() {
     const handleTaskDelete = (value) => {
       notify(value);
     };
-console.log(isLoggedIn);
+
 
   return (
     isLoggedIn ? (<section className='vh-100'>
